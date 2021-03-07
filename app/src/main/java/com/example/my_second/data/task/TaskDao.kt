@@ -1,4 +1,4 @@
-package com.example.my_second.data.local
+package com.example.my_second.data.task
 
 import androidx.room.Dao
 import androidx.room.Insert

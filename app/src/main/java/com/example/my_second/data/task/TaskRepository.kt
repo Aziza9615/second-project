@@ -1,8 +1,9 @@
-package com.example.my_second.newRepository
+package com.example.my_second.data.task
 
 import com.example.my_second.data.local.App.Companion.getDatabase
 import com.example.my_second.data.model.Task
-import com.example.my_second.data.network.RetrofitClient
+import com.example.my_second.data.local.RetrofitClient
+import com.example.my_second.data.model.Project
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -10,11 +11,12 @@ import retrofit2.Response
 interface RequestResult {
     fun onFailure(t: Throwable)
     fun <T>onSuccess(result: T)
+    fun onItemClick(item: Project)
 }
 
 class TaskRepository(private val callback: RequestResult) {
 
-    private var api = RetrofitClient().TaskApi
+    private var api = RetrofitClient().tasksApi
 
     private val database = getDatabase().TaskDao()
 

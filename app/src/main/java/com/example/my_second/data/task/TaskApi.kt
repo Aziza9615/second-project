@@ -1,4 +1,4 @@
-package com.example.my_second.data.network
+package com.example.my_second.data.task
 
 import com.example.my_second.data.model.Task
 import retrofit2.http.GET

@@ -1,5 +1,7 @@
-package com.example.my_second.data.network
+package com.example.my_second.data.local
 
+import com.example.my_second.data.project.ProjectApi
+import com.example.my_second.data.task.TaskApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -16,11 +18,11 @@ class RetrofitClient {
             .addInterceptor(httpLoggingInterceptor)
             .build()
     val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.todoist.com/rest/v1/")
+            .baseUrl("https://api.todoist.com/rest/v1/projects")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-    val TaskApi = retrofit.create(com.example.my_second.data.network.TaskApi::class.java)
-    val ProjectApi = retrofit.create(com.example.my_second.data.network.TaskApi::class.java)
+    val tasksApi = retrofit.create(TaskApi::class.java)
+    val projectApi = retrofit.create(ProjectApi::class.java)
 }

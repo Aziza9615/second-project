@@ -1,6 +1,5 @@
-package com.example.my_second.data.project
+package com.example.my_second.data.task
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -8,38 +7,46 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my_second.R
 import com.example.my_second.data.local.RequestResult
 import com.example.my_second.data.model.Project
-import com.example.my_second.data.task.TaskListActivity
+import com.example.my_second.data.model.Task
+import com.example.my_second.data.project.ProjectActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
-class ProjectActivity : AppCompatActivity(), RequestResult, ProjectAdapter.ClickListener {
+class TaskListActivity : AppCompatActivity(), RequestResult, TaskAdapter.ClickListener {
 
-    private lateinit var adapter: ProjectAdapter
-    private lateinit var repository: ProjectRepository
+    private var project = Project()
+
+    private lateinit var adapter: TaskAdapter
+    private lateinit var repository: TaskRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_task_list)
+        getIntentData()
         setupRecyclerView()
         setupRepository()
         fetchData()
     }
 
+    private fun getIntentData() {
+        project = intent.getSerializableExtra(ProjectActivity.PROJECT_KEY) as Project
+    }
+
     private fun setupRecyclerView() {
-        adapter = ProjectAdapter(this)
+        adapter = TaskAdapter(this)
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = adapter
     }
 
     private fun setupRepository() {
-        repository = ProjectRepository(this)
+        repository = TaskRepository(this)
     }
 
     private fun fetchData() {
-        repository.fetchProjects()
+        repository.fetchAllProjectsTasks(project.id)
     }
 
     override fun <T> onSuccess(result: T) {
-        val data = result as MutableList<Project>
+        val data = result as MutableList<Task>
         adapter.addItems(data)
     }
 
@@ -47,13 +54,7 @@ class ProjectActivity : AppCompatActivity(), RequestResult, ProjectAdapter.Click
         Toast.makeText(this, t, Toast.LENGTH_LONG).show()
     }
 
-    override fun onItemClick(item: Project) {
-        val intent = Intent(this, TaskListActivity::class.java)
-        intent.putExtra(PROJECT_KEY, item)
-        startActivity(intent)
-    }
+    override fun onItemClick(item: Task) {
 
-    companion object {
-        const val PROJECT_KEY = "PROJECT_KEY"
     }
 }

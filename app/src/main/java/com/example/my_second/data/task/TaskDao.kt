@@ -12,5 +12,5 @@ interface TaskDao {
     fun InsertTask(data: List<Task>?)
 
     @Query("SELECT * FROM task")
-    fun getAllTasks(): List<Task>
+    fun fetchTasks(): List<Task>
 }

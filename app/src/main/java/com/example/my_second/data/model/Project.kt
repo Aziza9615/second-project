@@ -1,6 +1,9 @@
 package com.example.my_second.data.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Project(
         var id: Long? = null,
@@ -14,4 +17,4 @@ data class Project(
         var syncId: Int? = null,
         @SerializedName("inbox_project")
         var inboxProject: Boolean? = null
-)
+) : Serializable

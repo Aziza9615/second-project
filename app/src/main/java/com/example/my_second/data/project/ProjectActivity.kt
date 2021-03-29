@@ -42,14 +42,13 @@ class ProjectActivity : AppCompatActivity(), RequestResult, ProjectAdapter.Click
         val data = result as MutableList<Project>
         adapter.addItems(data)
     }
-
     override fun onFailure(t: String?) {
         Toast.makeText(this, t, Toast.LENGTH_LONG).show()
     }
 
     override fun onItemClick(item: Project) {
         val intent = Intent(this, TaskListActivity::class.java)
-        intent.putExtra(PROJECT_KEY, item)
+        intent.putExtra(PROJECT_KEY, item )
         startActivity(intent)
     }
 

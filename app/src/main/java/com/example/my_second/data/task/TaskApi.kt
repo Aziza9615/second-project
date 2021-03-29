@@ -15,5 +15,5 @@ interface TaskApi {
     )
 
     @GET("tasks")
-    fun fetchTasks(@Query("projects_id") id: Long?): Call<MutableList<Task>>
+    fun fetchTasks(@Query("project_id") id: Long?): Call<MutableList<Task>>
 }

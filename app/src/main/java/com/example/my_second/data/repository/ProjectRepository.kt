@@ -1,4 +1,4 @@
-package com.example.my_second.data.project
+package com.example.my_second.data.repository
 
 import com.example.my_second.data.local.RequestResult
 import com.example.my_second.data.model.Project

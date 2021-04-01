@@ -6,9 +6,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my_second.R
+import com.example.my_second.data.task.TaskListActivity
 import com.example.my_second.data.local.RequestResult
 import com.example.my_second.data.model.Project
-import com.example.my_second.data.task.TaskListActivity
+import com.example.my_second.data.repository.ProjectRepository
 import kotlinx.android.synthetic.main.activity_main.*
 
 class ProjectActivity : AppCompatActivity(), RequestResult, ProjectAdapter.ClickListener {

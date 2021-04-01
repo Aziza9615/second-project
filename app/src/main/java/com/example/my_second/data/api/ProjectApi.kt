@@ -1,4 +1,4 @@
-package com.example.my_second.data.project
+package com.example.my_second.data.api
 
 import com.example.my_second.data.model.Project
 import com.example.my_second.data.model.Task

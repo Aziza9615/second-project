@@ -1,7 +1,7 @@
 package com.example.my_second.data.local
 
-import com.example.my_second.data.project.ProjectApi
-import com.example.my_second.data.task.TaskApi
+import com.example.my_second.data.api.ProjectApi
+import com.example.my_second.data.api.TaskApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

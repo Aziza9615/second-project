@@ -8,11 +8,7 @@ fun Context.showToast(message: String?) {
     Toast.makeText(this,message, Toast.LENGTH_LONG).show()
 }
 
-fun display(): String {
-    return "Companion object Extensions"
+fun View.visible() {
+
 }
 
-fun main (args: Array<String>) {
-val list = mutableListOf(6,7,9)
-    print("The the List $list ")
-}

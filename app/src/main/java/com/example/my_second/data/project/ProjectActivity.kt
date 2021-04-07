@@ -1,28 +1,27 @@
 package com.example.my_second.data.project
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my_second.R
 import com.example.my_second.data.task.TaskListActivity
-import com.example.my_second.data.local.RequestResult
 import com.example.my_second.data.model.Project
-import com.example.my_second.data.repository.ProjectRepository
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.NonCancellable.start
 
-class ProjectActivity : AppCompatActivity(), RequestResult, ProjectAdapter.ClickListener {
+class ProjectActivity : AppCompatActivity(), ProjectAdapter.ClickListener {
 
     private lateinit var adapter: ProjectAdapter
-    private lateinit var repository: ProjectRepository
+    private lateinit var viewModel: ProjectViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        viewModel = ViewModelProvider(this).get(ProjectViewModel::class.java)
         setupRecyclerView()
-        setupRepository()
-        fetchData()
+        subscribeToLiveData()
     }
 
     private fun setupRecyclerView() {
@@ -31,29 +30,13 @@ class ProjectActivity : AppCompatActivity(), RequestResult, ProjectAdapter.Click
         recycler_view.adapter = adapter
     }
 
-    private fun setupRepository() {
-        repository = ProjectRepository(this)
-    }
-
-    private fun fetchData() {
-        repository.fetchProjects()
-    }
-
-    override fun <T> onSuccess(result: T) {
-        val data = result as MutableList<Project>
-        adapter.addItems(data)
-    }
-    override fun onFailure(t: String?) {
-        Toast.makeText(this, t, Toast.LENGTH_LONG).show()
+    private fun subscribeToLiveData() {
+        viewModel.data?.observe(this, Observer {
+            if (it != null) adapter.addItems(it)
+        })
     }
 
     override fun onItemClick(item: Project) {
-        val intent = Intent(this, TaskListActivity::class.java)
-        intent.putExtra(PROJECT_KEY, item )
-        startActivity(intent)
-    }
-
-    companion object {
-        const val PROJECT_KEY = "PROJECT_KEY"
+        TaskListActivity.start(this, item)
     }
 }

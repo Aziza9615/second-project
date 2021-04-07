@@ -1,16 +1,15 @@
 package com.example.my_second.data.task
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Message
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my_second.R
 import com.example.my_second.data.local.RequestResult
 import com.example.my_second.data.local.showToast
 import com.example.my_second.data.model.Project
 import com.example.my_second.data.model.Task
-import com.example.my_second.data.project.ProjectActivity
 import com.example.my_second.data.repository.TaskRepository
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -31,7 +30,7 @@ class TaskListActivity : AppCompatActivity(), RequestResult, TaskAdapter.ClickLi
     }
 
     private fun getIntentData() {
-        project = intent.getSerializableExtra(ProjectActivity.PROJECT_KEY) as Project
+        project = intent.getSerializableExtra(PROJECT_KEY) as Project
     }
 
     private fun setupRecyclerView() {
@@ -69,6 +68,7 @@ class TaskListActivity : AppCompatActivity(), RequestResult, TaskAdapter.ClickLi
     }
 
     override fun onItemClick(item: Task) {
+
     }
 
     override fun onCheckedClick(item: Task) {
@@ -76,6 +76,16 @@ class TaskListActivity : AppCompatActivity(), RequestResult, TaskAdapter.ClickLi
     }
 
     override fun onRemoveItem(item: Task, position: Int) {
-        repository.deleteTask(item.id)
+        //repository.deleteTask(item.id)
+    }
+
+    companion object {
+        const val PROJECT_KEY = "PROJECT_KEY"
+
+        fun start(context: Context, item: Project) {
+            val intent = Intent(context, TaskListActivity::class.java)
+            intent.putExtra(PROJECT_KEY, item)
+            context.startActivity(intent)
+        }
     }
 }

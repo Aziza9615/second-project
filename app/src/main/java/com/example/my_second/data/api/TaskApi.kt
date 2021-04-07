@@ -12,7 +12,7 @@ interface TaskApi {
     )
 
     @GET("tasks")
-    fun fetchTasks(@Query("project_id") id: Long?): Call<MutableList<Task>>
+    fun fetchTasks(): Call<MutableList<Task>>
 
     @Headers(
             "Authorization: Bearer 18d41187422aa8a8949e8a12f437b961c34b0dce",

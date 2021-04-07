@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my_second.R
 import com.example.my_second.data.task.TaskListActivity
 import com.example.my_second.data.model.Project
+import com.example.my_second.data.viewModel.project.ProjectViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.NonCancellable.start
 
 class ProjectActivity : AppCompatActivity(), ProjectAdapter.ClickListener {
 

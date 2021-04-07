@@ -1,14 +1,14 @@
-package com.example.my_second.data.project
+package com.example.my_second.data.viewModel.task
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.my_second.data.model.Project
-import com.example.my_second.data.repository.ProjectRepository
+import com.example.my_second.data.model.Task
+import com.example.my_second.data.repository.TaskRepository
 
-class ProjectViewModel : ViewModel() {
+class TaskListViewModel: ViewModel() {
 
-    private val repository = ProjectRepository()
-    val data: MutableLiveData<MutableList<Project>>?
+    private val repository = TaskRepository()
+    val data: MutableLiveData<MutableList<Task>>?
     val message: MutableLiveData<String>?
 
     init {
@@ -16,7 +16,7 @@ class ProjectViewModel : ViewModel() {
         message = MutableLiveData()
         subscribeToData()
         subscribeToMessage()
-        repository.fetchProjects()
+        repository.fetchTasks()
     }
 
     fun subscribeToData() {
@@ -26,7 +26,7 @@ class ProjectViewModel : ViewModel() {
     }
 
     fun subscribeToMessage() {
-        repository.data?.observeForever {
+        repository.message?.observeForever {
             message?.value = it.toString()
         }
     }

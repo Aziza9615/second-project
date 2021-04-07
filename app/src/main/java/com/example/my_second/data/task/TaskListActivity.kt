@@ -1,9 +1,12 @@
-package com.example.my_second.data.task
+ package com.example.my_second.data.task
 
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my_second.R
 import com.example.my_second.data.local.RequestResult
@@ -11,22 +14,25 @@ import com.example.my_second.data.local.showToast
 import com.example.my_second.data.model.Project
 import com.example.my_second.data.model.Task
 import com.example.my_second.data.repository.TaskRepository
+import com.example.my_second.data.task.TaskListActivity.Companion.start
+import com.example.my_second.data.viewModel.task.TaskListViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.NonCancellable.start
 
-class TaskListActivity : AppCompatActivity(), RequestResult, TaskAdapter.ClickListener {
+ class TaskListActivity : AppCompatActivity(), RequestResult, TaskAdapter.ClickListener {
 
     private var project = Project()
 
     private lateinit var adapter: TaskAdapter
-    private lateinit var repository: TaskRepository
+    private lateinit var viewModel: TaskListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_list)
+        viewModel = ViewModelProvider(this).get(TaskListViewModel::class.java)
         getIntentData()
         setupRecyclerView()
-        setupRepository()
-        fetchData()
+        subscribeToLiveData()
     }
 
     private fun getIntentData() {
@@ -39,12 +45,10 @@ class TaskListActivity : AppCompatActivity(), RequestResult, TaskAdapter.ClickLi
         recycler_view.adapter = adapter
     }
 
-    private fun setupRepository() {
-        repository = TaskRepository(this)
-    }
-
-    private fun fetchData() {
-        repository.fetchAllProjectsTasks(project.id)
+    private fun subscribeToLiveData() {
+        viewModel.data?.observe(this,   Observer {
+            if (it != null) adapter.addItems(it)
+        })
     }
 
     override fun <T> onSuccess(result: T) {
@@ -68,11 +72,11 @@ class TaskListActivity : AppCompatActivity(), RequestResult, TaskAdapter.ClickLi
     }
 
     override fun onItemClick(item: Task) {
-
+        
     }
 
     override fun onCheckedClick(item: Task) {
-        repository.changeStateOfTask(item. id)
+
     }
 
     override fun onRemoveItem(item: Task, position: Int) {

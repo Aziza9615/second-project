@@ -4,10 +4,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.my_second.data.model.Project
 import com.example.my_second.data.repository.ProjectRepository
+import com.example.my_second.data.repository.ProjectRepositoryImpl
 
 class ProjectViewModel : ViewModel() {
 
-    private val repository = ProjectRepository()
+    private val repository = ProjectRepositoryImpl()
     val data: MutableLiveData<MutableList<Project>>?
     val message: MutableLiveData<String>?
 
@@ -19,13 +20,13 @@ class ProjectViewModel : ViewModel() {
         repository.fetchProjects()
     }
 
-    fun subscribeToData() {
+    private fun subscribeToData() {
         repository.data?.observeForever {
             data?.value = it
         }
     }
 
-    fun subscribeToMessage() {
+    private fun subscribeToMessage() {
         repository.message?.observeForever {
             message?.value = it.toString()
         }

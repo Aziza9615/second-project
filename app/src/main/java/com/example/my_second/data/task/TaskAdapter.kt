@@ -3,16 +3,18 @@ package com.example.my_second.data.task
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.BaseAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.my_second.R
+import com.example.my_second.data.base.BaseViewHolder
 import com.example.my_second.data.model.Task
 import kotlinx.android.synthetic.main.item_task.view.*
 
-class TaskAdapter(private var listener: ClickListener) : RecyclerView.Adapter<TasksViewHolder>() {
+class TaskAdapter(private var listener: ClickListener) : BaseAdapter() {
 
     private var items = mutableListOf<Task>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TasksViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return TasksViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_task, parent, false))
     }
 
@@ -22,7 +24,7 @@ class TaskAdapter(private var listener: ClickListener) : RecyclerView.Adapter<Ta
 
     override fun onBindViewHolder(holder: TasksViewHolder, position: Int) {
         val item = items[position]
-        holder.bind(item)
+        val holder = holder as TasksViewHolder
         holder.itemView.setOnClickListener {
             listener.onItemClick(item)
         }
@@ -47,7 +49,7 @@ class TaskAdapter(private var listener: ClickListener) : RecyclerView.Adapter<Ta
     }
 }
 
-class TasksViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class TasksViewHolder(itemView: View) : BaseViewHolder(itemView) {
     fun bind(item: Task) {
         itemView.tv_task.text = item.content
         val stateOfTask = item.completed?: false

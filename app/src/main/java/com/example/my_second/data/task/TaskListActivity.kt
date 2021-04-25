@@ -6,33 +6,21 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my_second.R
-import com.example.my_second.data.local.RequestResult
-import com.example.my_second.data.local.showToast
+import com.example.my_second.data.base.BaseActivity
 import com.example.my_second.data.model.Project
 import com.example.my_second.data.model.Task
-import com.example.my_second.data.repository.TaskRepository
-import com.example.my_second.data.task.TaskListActivity.Companion.start
-import com.example.my_second.data.viewModel.task.TaskListViewModel
+import com.example.my_second.data.viewModel.TaskListViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.NonCancellable.start
 
- class TaskListActivity : AppCompatActivity(), TaskAdapter.ClickListener {
+ class TaskListActivity : BaseActivity<TaskListViewModel>(R.layout.activity_task_list, TaskListViewModel::class.java), TaskAdapter.ClickListener {
 
-     private var project = Project()
+     lateinit var adapter: TaskAdapter
 
-     private lateinit var adapter: TaskAdapter
-     private lateinit var viewModel: TaskListViewModel
-
-     override fun onCreate(savedInstanceState: Bundle?) {
-         super.onCreate(savedInstanceState)
-         setContentView(R.layout.activity_task_list)
-         viewModel = ViewModelProvider(this).get(TaskListViewModel::class.java)
+     override fun setupViews() {
          getIntentData()
          setupRecyclerView()
-         subscribeToLiveData()
      }
 
      private fun getIntentData() {
@@ -45,22 +33,10 @@ import kotlinx.coroutines.NonCancellable.start
          recycler_view.adapter = adapter
      }
 
-     private fun subscribeToLiveData() {
+     override fun subscribeToLiveData() {
          viewModel.data?.observe(this, Observer {
              if (it != null) adapter.addItems(it)
          })
-     }
-
-     override fun onItemClick(item: Task) {
-
-     }
-
-     override fun onCheckedClick(item: Task) {
-
-     }
- 
-     override fun onRemoveItem(item: Task, position: Int) {
-         //repository.deleteTask(item.id)
      }
 
      companion object {
@@ -71,5 +47,17 @@ import kotlinx.coroutines.NonCancellable.start
              intent.putExtra(PROJECT_KEY, item)
              context.startActivity(intent)
          }
+     }
+
+     override fun onItemClick(item: Task) {
+         TODO("Not yet implemented")
+     }
+
+     override fun onCheckedClick(item: Task) {
+         TODO("Not yet implemented")
+     }
+
+     override fun onRemoveItem(item: Task, position: Int) {
+         TODO("Not yet implemented")
      }
  }

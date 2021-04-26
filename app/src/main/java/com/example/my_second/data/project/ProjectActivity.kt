@@ -1,5 +1,7 @@
 package com.example.my_second.data.project
 
+import android.os.Handler
+import android.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my_second.R
@@ -25,7 +27,28 @@ class ProjectActivity : BaseActivity<ProjectViewModel>(R.layout.activity_main, P
     }
 
     private fun setupSearchView() {
+        search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener, androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
 
+            override fun onQueryTextChange(newText: String): Boolean {
+
+                Handler().postDelayed(Runnable {
+                    if (newText == "") {
+                        adapter.addItems(viewModel.project)
+                    } else {
+
+                        val searchText = newText.toLowerCase()
+                        val filtered = mutableListOf<Project>()
+                        viewModel.project.forEach { if (it.name?.toLowerCase()?.contains(searchText)!!) filtered.add(it) }
+                        adapter.addItems(filtered)
+
+                    }
+                }, 800)
+                return false
+            }
+        })
     }
 
     override fun subscribeToLiveData() {

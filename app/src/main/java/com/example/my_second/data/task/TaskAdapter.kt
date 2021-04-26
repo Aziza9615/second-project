@@ -3,9 +3,8 @@ package com.example.my_second.data.task
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.example.my_second.R
+import com.example.my_second.data.base.BaseAdapter
 import com.example.my_second.data.base.BaseViewHolder
 import com.example.my_second.data.model.Task
 import kotlinx.android.synthetic.main.item_task.view.*
@@ -22,7 +21,7 @@ class TaskAdapter(private var listener: ClickListener) : BaseAdapter() {
         return items.count()
     }
 
-    override fun onBindViewHolder(holder: TasksViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         val item = items[position]
         val holder = holder as TasksViewHolder
         holder.itemView.setOnClickListener {

@@ -3,12 +3,13 @@ package com.example.my_second.data.project
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
 import com.example.my_second.R
+import com.example.my_second.data.base.BaseAdapter
 import com.example.my_second.data.base.BaseViewHolder
 import com.example.my_second.data.color.ColorType.getProjectColorType
 import com.example.my_second.data.model.Project
 import kotlinx.android.synthetic.main.item_project.view.*
+
 
 class ProjectAdapter(private var listener: ClickListener) : BaseAdapter() {
 

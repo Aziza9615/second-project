@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName
 data class Task (
         @PrimaryKey(autoGenerate = false)
         val id: Long? = null,
+        var name: String? = null,
         val assigner: Int? = null,
         @SerializedName("project_id")
         val projectId: Long? = null,

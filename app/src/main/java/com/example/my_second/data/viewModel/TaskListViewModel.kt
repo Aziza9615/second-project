@@ -10,6 +10,7 @@ import com.example.my_second.data.repository.TaskRepositoryImpl
 class TaskListViewModel: ViewModel() {
 
     private val repository = TaskRepositoryImpl()
+    var task = mutableListOf<Task>()
     val data: MutableLiveData<MutableList<Task>>?
     val message: MutableLiveData<String>?
 

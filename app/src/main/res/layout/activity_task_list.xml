@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:textSize="48sp"
         android:layout_margin="16dp"
-        android:text="Project"/>
+        android:text="Task"/>
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search_view"

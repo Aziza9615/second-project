@@ -11,6 +11,6 @@ interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun InsertTask(data: List<Task>?)
 
-    @Query("SELECT * FROM task")
-    fun fetchTasks(): List<Task>
+//    @Query("SELECT * FROM task")
+//    fun fetchTasks(): List<Task>
 }

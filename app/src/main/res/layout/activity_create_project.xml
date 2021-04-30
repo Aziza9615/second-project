@@ -19,11 +19,11 @@
         android:id="@+id/et_input_project_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="28sp"
+        android:textSize="@dimen/text_size_28_sp"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/margin_16_dp"
         android:hint="@string/input_create_project"/>
 
     <Button
@@ -31,9 +31,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/et_input_project_title"
         app:layout_constraintStart_toStartOf="@+id/et_input_project_title"
-        android:textSize="19sp"
+        android:textSize="@dimen/text_size_19_sp"
         android:text="@string/select_color"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="@dimen/margin_top_24_dp"
         android:background="@null"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

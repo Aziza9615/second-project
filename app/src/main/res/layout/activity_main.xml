@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:textSize="@dimen/text_size_48_sp"
-        android:layout_margin="@dimen/matgin_16_dp"
+        android:layout_margin="@dimen/margin_16_dp"
         android:text="Project"/>
 
     <androidx.appcompat.widget.SearchView

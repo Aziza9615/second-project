@@ -1,16 +1,14 @@
 package com.example.my_second.data.project
 
-import android.content.Intent
 import android.os.Handler
 import android.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my_second.R
 import com.example.my_second.data.base.BaseActivity
+import com.example.my_second.data.create.CreateProjectActivity
 import com.example.my_second.data.task.TaskListActivity
 import com.example.my_second.data.model.Project
-import com.example.my_second.data.task.TaskListActivity.Companion.PROJECT_KEY
-import com.example.my_second.data.viewModel.ProjectViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class ProjectActivity : BaseActivity<ProjectViewModel>(R.layout.activity_main, ProjectViewModel::class.java), ProjectAdapter.ClickListener {
@@ -68,9 +66,6 @@ class ProjectActivity : BaseActivity<ProjectViewModel>(R.layout.activity_main, P
 
     override fun onItemClick(item: Project) {
         TaskListActivity.instance(this, item)
-        var intent = Intent(this, CreateProjectActivity::class.java)
-        intent.putExtra(ITEM_KEY, item)
-        startActivity(intent)
     }
 
     companion object {

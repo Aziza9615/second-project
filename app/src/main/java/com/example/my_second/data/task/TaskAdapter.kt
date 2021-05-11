@@ -24,6 +24,7 @@ class TaskAdapter(private var listener: ClickListener) : BaseAdapter() {
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         val item = items[position]
         val holder = holder as TasksViewHolder
+        holder.bind(item)
         holder.itemView.setOnClickListener {
             listener.onItemClick(item)
         }

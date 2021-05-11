@@ -30,6 +30,7 @@ class ProjectAdapter(private var listener: ClickListener) : BaseAdapter() {
             listener.onItemClick(item)
         }
     }
+
     fun addItems(data: MutableList<Project>) {
         items = data
         notifyDataSetChanged()

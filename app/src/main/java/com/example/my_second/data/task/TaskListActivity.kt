@@ -10,9 +10,7 @@ import com.example.my_second.R
 import com.example.my_second.data.base.BaseActivity
 import com.example.my_second.data.model.Project
 import com.example.my_second.data.model.Task
-import com.example.my_second.data.viewModel.TaskListViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import okhttp3.internal.http2.Http2Reader
 
  class TaskListActivity : BaseActivity<TaskListViewModel>(R.layout.activity_task_list, TaskListViewModel::class.java), TaskAdapter.ClickListener {
 
@@ -25,7 +23,7 @@ import okhttp3.internal.http2.Http2Reader
      }
 
      private fun getIntentData() {
-         viewModel.project = intent.getSerializableExtra(PROJECT_KEY) as Project
+         viewModel.project = intent.getSerializableExtra(PROJECT_KEY) as Project?
      }
 
      private fun setupRecyclerView() {

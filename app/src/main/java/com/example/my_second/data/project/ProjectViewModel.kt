@@ -1,10 +1,9 @@
-package com.example.my_second.data.viewModel
+package com.example.my_second.data.project
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.my_second.data.model.Project
-import com.example.my_second.data.repository.ProjectRepository
-import com.example.my_second.data.repository.ProjectRepositoryImpl
+import com.example.my_second.data.project.ProjectRepositoryImpl
 
 class ProjectViewModel : ViewModel() {
 
@@ -33,4 +32,7 @@ class ProjectViewModel : ViewModel() {
             message?.value = it.toString()
         }
     }
+
+   // домашнее задание в 80 уроке , не забудь
+    // 20 50 удаление из постмана проект
 }

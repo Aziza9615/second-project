@@ -3,12 +3,13 @@ package com.example.my_second.data.color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import com.example.my_second.R
 import com.example.my_second.data.base.BaseAdapter
 import com.example.my_second.data.base.BaseViewHolder
 import com.example.my_second.data.model.PrimaryColor
 
-class ColorAdapter(private var listener: ColorPickerBottomSheetDialogFragment) : BaseAdapter() {
+class ColorAdapter(private var listener: ColorPickerBottomSheetDialogFragment, requireActivity: FragmentActivity) : BaseAdapter() {
 
     private var items = mutableListOf<PrimaryColor>()
 

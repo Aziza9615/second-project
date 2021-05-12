@@ -2,32 +2,24 @@
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.os.Handler
-import android.os.PersistableBundle
 import android.widget.SearchView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my_second.R
 import com.example.my_second.data.base.BaseActivity
 import com.example.my_second.data.model.Project
 import com.example.my_second.data.model.Task
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.android.ext.android.inject
 
- class TaskListActivity : AppCompatActivity(), TaskAdapter.ClickListener {
+ class TaskListActivity : BaseActivity<TaskListViewModel>(R.layout.activity_task_list, TaskListViewModel::class.java), TaskAdapter.ClickListener {
 
-     val viewModel by inject<TaskListViewModel>()
+     lateinit var adapter: TaskAdapter
 
-     private lateinit var adapter: TaskAdapter
-     override fun onCreate(savedInstanceState: Bundle?) {
-         super.onCreate(savedInstanceState)
-         setContentView(R.layout.activity_task_list)
+     override fun setupViews() {
          getIntentData()
          setupRecyclerView()
-         subscribeToLiveData()
+         setupSearchView()
      }
 
      private fun getIntentData() {
@@ -40,29 +32,56 @@ import org.koin.android.ext.android.inject
          recycler_view.adapter = adapter
      }
 
-     private fun subscribeToLiveData() {
-         viewModel.data?.observe(this, Observer {
-             adapter.addItems(it)
+     private fun setupSearchView() {
+         search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener, androidx.appcompat.widget.SearchView.OnQueryTextListener {
+             override fun onQueryTextSubmit(query: String): Boolean {
+                 return false
+             }
+
+             override fun onQueryTextChange(newText: String): Boolean {
+
+                 Handler().postDelayed(Runnable {
+                     if (newText == "") {
+                         adapter.addItems(viewModel.task)
+                     } else {
+
+                         val searchText = newText.toLowerCase()
+                         val filtered = mutableListOf<Task>()
+                         viewModel.task.forEach { if (it.name?.toLowerCase()?.contains(searchText)!!) filtered.add(it) }
+                         adapter.addItems(filtered)
+
+                     }
+                 }, 800)
+                 return false
+             }
          })
      }
 
-     override fun onItemClick(item: Task) {
-     }
-
-     override fun onCheckedClick(item: Task) {
-//        repository.changeStateOfTask(item.id)
-     }
-
-     override fun onRemoveItem(item: Task, position: Int) {
-
+     override fun subscribeToLiveData() {
+         viewModel.data?.observe(this, Observer {
+             if (it != null) adapter.addItems(it)
+         })
      }
 
      companion object {
          const val PROJECT_KEY = "PROJECT_KEY"
+
          fun instance(context: Context, item: Project) {
              val intent = Intent(context, TaskListActivity::class.java)
              intent.putExtra(PROJECT_KEY, item)
              context.startActivity(intent)
          }
+     }
+
+     override fun onItemClick(item: Task) {
+         TODO("Not yet implemented")
+     }
+
+     override fun onCheckedClick(item: Task) {
+         TODO("Not yet implemented")
+     }
+
+     override fun onRemoveItem(item: Task, position: Int) {
+         TODO("Not yet implemented")
      }
  }

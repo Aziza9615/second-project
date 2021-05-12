@@ -10,12 +10,10 @@ import com.example.my_second.data.create.CreateProjectActivity
 import com.example.my_second.data.task.TaskListActivity
 import com.example.my_second.data.model.Project
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.android.ext.android.inject
 
-class ProjectActivity : BaseActivity<ProjectViewModel>( R.layout.activity_main), ProjectAdapter.ClickListener {
+class ProjectActivity : BaseActivity<ProjectViewModel>(R.layout.activity_main, ProjectViewModel::class.java), ProjectAdapter.ClickListener {
 
     lateinit var adapter: ProjectAdapter
-    override val viewModel by inject<ProjectViewModel>()
 
     override fun setupViews() {
         setupRecyclerView()
@@ -30,23 +28,23 @@ class ProjectActivity : BaseActivity<ProjectViewModel>( R.layout.activity_main),
     }
 
     private fun setupSearchView() {
-        search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
-            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+        search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener, androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 return false
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
+
                 Handler().postDelayed(Runnable {
                     if (newText == "") {
                         adapter.addItems(viewModel.project)
                     } else {
+
                         val searchText = newText.toLowerCase()
                         val filtered = mutableListOf<Project>()
-                        viewModel.project.forEach {
-                            if (it.name?.toLowerCase()?.contains(searchText)!!) filtered.add(it)
-                        }
+                        viewModel.project.forEach { if (it.name?.toLowerCase()?.contains(searchText)!!) filtered.add(it) }
                         adapter.addItems(filtered)
+
                     }
                 }, 800)
                 return false
@@ -65,7 +63,12 @@ class ProjectActivity : BaseActivity<ProjectViewModel>( R.layout.activity_main),
             adapter.addItems(it)
         })
     }
+
     override fun onItemClick(item: Project) {
         TaskListActivity.instance(this, item)
+    }
+
+    companion object {
+        const val ITEM_KEY = "ITEM_KEY"
     }
 }

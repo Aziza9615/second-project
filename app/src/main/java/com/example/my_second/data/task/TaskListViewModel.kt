@@ -2,22 +2,19 @@ package com.example.my_second.data.task
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.my_second.data.base.BaseViewModel
 import com.example.my_second.data.local.ResponseResultStatus
 import com.example.my_second.data.model.Project
 import com.example.my_second.data.model.Task
+import com.example.my_second.data.repository.TaskRepository
+import com.example.my_second.data.repository.TaskRepositoryImpl
 
-class TaskListViewModel: ViewModel() {
+class TaskListViewModel(private val repository: TaskRepositoryImpl) : BaseViewModel() {
 
-    private val repository = TaskRepository.TaskRepositoryImpl()
-    var task = mutableListOf<Task>()
-    val data: MutableLiveData<MutableList<Task>>?
-    val message: MutableLiveData<String>?
-
+    val data: MutableLiveData<MutableList<Task>>? = MutableLiveData()
     var project: Project? = null
 
     init {
-        data = MutableLiveData()
-        message = MutableLiveData()
         fetchAllProjectsTasks()
     }
 

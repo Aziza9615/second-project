@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my_second.R
+import com.example.my_second.data.model.PrimaryColor
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_sheet_color_picker.*
 
@@ -22,8 +23,12 @@ class ColorPickerBottomSheetDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = ColorAdapter(this, requireActivity())
+        adapter = ColorAdapter(this)
         recycler_view.layoutManager = LinearLayoutManager(requireContext())
         recycler_view.adapter = adapter
+    }
+
+    fun onItemClick(item: PrimaryColor) {
+        TODO("Not yet implemented")
     }
 }

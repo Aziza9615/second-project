@@ -9,7 +9,7 @@ import com.example.my_second.data.base.BaseViewHolder
 import com.example.my_second.data.model.Task
 import kotlinx.android.synthetic.main.item_task.view.*
 
-class TaskAdapter(private var listener: ClickListener) : BaseAdapter() {
+class TaskAdapter(private var listener: TaskListActivity) : BaseAdapter() {
 
     private var items = mutableListOf<Task>()
 

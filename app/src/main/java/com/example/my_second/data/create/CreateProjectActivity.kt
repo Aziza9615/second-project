@@ -9,14 +9,10 @@ import com.example.my_second.R
 import com.example.my_second.data.base.BaseActivity
 import com.example.my_second.data.color.ColorPickerBottomSheetDialogFragment
 import com.example.my_second.data.local.showToast
-import com.example.my_second.data.model.Project
-import com.example.my_second.data.project.ProjectActivity
 import kotlinx.android.synthetic.main.activity_create_project.*
+import org.koin.android.ext.android.inject
 
-class CreateProjectActivity : BaseActivity<CreateProjectViewModel>(
-    R.layout.activity_create_project,
-    CreateProjectViewModel::class.java
-) {
+class CreateProjectActivity : BaseActivity<CreateProjectViewModel>( R.layout.activity_create_project, CreateProjectViewModel::class) {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_create_project, menu)
@@ -41,7 +37,6 @@ class CreateProjectActivity : BaseActivity<CreateProjectViewModel>(
     }
 
     private fun setupToolbar() {
-        setSupportActionBar(toolbar)
         supportActionBar?.title = resources.getString(R.string.create_project)
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -57,15 +52,11 @@ class CreateProjectActivity : BaseActivity<CreateProjectViewModel>(
     }
 
     override fun subscribeToLiveData() {
-        viewModel.createResult?.observe(this, Observer {
+        viewModel.createResult.observe(this, Observer {
             if (it == true) {
                 showToast("Проект успешно создан")
                 finish()
             }
-        })
-
-        viewModel.message?.observe(this, Observer {
-            showToast(it)
         })
     }
 
@@ -73,7 +64,6 @@ class CreateProjectActivity : BaseActivity<CreateProjectViewModel>(
         fun instance(context: Context) {
             val intent = Intent(context, CreateProjectActivity::class.java)
             context.startActivity(intent)
-            val item = intent.getSerializableExtra(ProjectActivity.ITEM_KEY) as Project
         }
     }
 }

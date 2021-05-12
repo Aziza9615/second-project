@@ -22,4 +22,13 @@ interface ProjectApi {
     )
     @POST("projects")
     fun createProject(@Body data: Project): Call<Project>
+
+    @Headers(
+            "Authorization: Bearer ef2d47cfd8cdf0197fa7e88333a980cfba52256a",
+            "client_Id: fa2ce0543994447f9c0e610a6d5c90ee",
+            "client_secret: 2bc37377890345de84a635916aaffa70"
+    )
+
+    @DELETE("projects/{id}")
+    fun deleteProject(@Path("id") id: Long?): Call<Int>
 }

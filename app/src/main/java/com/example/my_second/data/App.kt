@@ -1,6 +1,9 @@
-package com.example.my_second.data.di
+package com.example.my_second.data
 
 import android.app.Application
+import com.example.my_second.data.di.networkRepository
+import com.example.my_second.data.di.repositoryModule
+import com.example.my_second.data.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.loadKoinModules

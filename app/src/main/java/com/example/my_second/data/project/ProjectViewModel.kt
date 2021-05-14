@@ -48,38 +48,5 @@ class ProjectViewModel(private val repository: ProjectRepositoryImpl) : BaseView
     }
 }
 
-//fun main() {
-//    val car = Car(Driver.Engine(Driver.Gazoline()), Body(), Driver(Driver.License(19, "KG")))
-//}
-//
-//class Car(engine: Driver.Engine, body: Body, driver: Driver) {
-//
-//}
-//
-//class Body() {
-//
-//}
-//
-//class Driver(license: License) {
-//
-//    fun getClassOfLicense() {
-//    }
-//
-//    class License(age: Int, gos: String)
-//
-//    class Engine(fuel: Fuel) {
-//
-//    }
-//
-//    open class Fuel() {
-//
-//    }
-//
-//    class Gazoline() : Fuel() {
-//
-//    }
-//
-//    class Electrosity : Fuel() {
-
      // домашнее задание в 80 уроке , не забудь
     // 20 50 удаление из постмана проект

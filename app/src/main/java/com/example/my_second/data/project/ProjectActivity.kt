@@ -50,15 +50,15 @@ class ProjectActivity : BaseActivity<ProjectViewModel>(R.layout.activity_main, P
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 val item = viewModel.data.value?.get(position)
+//                adapter.deleteItem(position)
                 viewModel.deleteProject(item?.id)
 
             }
         }
-
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(recycler_view)
     }
-
+    
     private fun setupSearchView() {
         search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
                 androidx.appcompat.widget.SearchView.OnQueryTextListener {

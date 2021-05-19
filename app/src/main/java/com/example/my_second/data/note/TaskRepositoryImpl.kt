@@ -1,8 +1,9 @@
-package com.example.my_second.data.task
+package com.example.my_second.data.note
 
 import androidx.lifecycle.MutableLiveData
 import com.example.my_second.data.api.TaskApi
 import com.example.my_second.data.local.ResponseResult
+import com.example.my_second.data.model.PrimaryColor
 import com.example.my_second.data.model.Task
 import retrofit2.Call
 import retrofit2.Callback
@@ -11,6 +12,7 @@ import retrofit2.Response
 
 interface TaskRepository {
     fun fetchAllProjectsTasks(id: Long?): MutableLiveData<ResponseResult<MutableList<Task>>>
+    fun createNote(dto: Task): MutableLiveData<ResponseResult<Task>>
     fun changeStateOfTask(id: Long?)
     fun deleteTask(id: Long?)
 }
@@ -26,10 +28,22 @@ class TaskRepositoryImpl(private val api: TaskApi) : TaskRepository {
                 data.value = ResponseResult.error(t.message)
             }
 
-            override fun onResponse(
-                    call: Call<MutableList<Task>>,
-                    response: Response<MutableList<Task>>
-            ) {
+            override fun onResponse(call: Call<MutableList<Task>>, response: Response<MutableList<Task>>) {
+                data.value = if (response.isSuccessful) ResponseResult.success(response.body())
+                        else ResponseResult.error(response.message())
+            }
+        })
+        return data
+    }
+
+    override fun createNote(dto: Task): MutableLiveData<ResponseResult<Task>> {
+        val data: MutableLiveData<ResponseResult<Task>> = MutableLiveData(ResponseResult.loading())
+        api.createNote(dto).enqueue(object : Callback<Task> {
+            override fun onFailure(call: Call<Task>, t: Throwable) {
+                data.value = ResponseResult.error(t.message)
+            }
+
+            override fun onResponse(call: Call<Task>, response: Response<Task>) {
                 data.value =
                         if (response.isSuccessful) ResponseResult.success(response.body())
                         else ResponseResult.error(response.message())

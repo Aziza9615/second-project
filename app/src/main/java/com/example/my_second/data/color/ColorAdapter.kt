@@ -21,9 +21,11 @@ class ColorAdapter(private var listener: ClickListener) : BaseAdapter() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return ColorViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_color, parent, false))
     }
+
     override fun getItemCount(): Int {
         return items.count()
     }
+
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         val item = items[position]
         val holder = holder as ColorViewHolder

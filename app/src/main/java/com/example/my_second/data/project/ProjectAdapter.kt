@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import com.example.my_second.R
 import com.example.my_second.data.base.BaseAdapter
 import com.example.my_second.data.base.BaseViewHolder
-import com.example.my_second.data.color.ColorType.getProjectColorType
+import com.example.my_second.data.color.ColorType.getNotesPallette
 import com.example.my_second.data.model.Project
 import kotlinx.android.synthetic.main.item_project.view.*
 
@@ -42,7 +42,7 @@ class ProjectAdapter(private var listener: ClickListener) : BaseAdapter() {
 
 class ProjectViewHolder(itemView: View) : BaseViewHolder(itemView) {
     fun bind(item: Project) {
-        itemView.view_project_indicator.setBackgroundColor(getProjectColorType(item.color))
+       // itemView.view_project_indicator.setBackgroundColor(getNotesPallette(item.color))
         itemView.tv_title.text = item.name
     }
 }

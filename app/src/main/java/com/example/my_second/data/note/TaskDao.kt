@@ -1,9 +1,8 @@
-package com.example.my_second.data.task
+package com.example.my_second.data.note
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
-import androidx.room.Query
 import com.example.my_second.data.model.Task
 
 @Dao

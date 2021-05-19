@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import com.example.my_second.R
 import com.example.my_second.data.base.BaseActivity
 import com.example.my_second.data.color.ColorPickerBottomSheetDialogFragment
-import com.example.my_second.data.color.PickerColor
+import com.example.my_second.data.color.PickerColorListener
 import com.example.my_second.data.local.showToast
 import com.example.my_second.data.local.visible
 import com.example.my_second.data.model.PrimaryColor
@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_create_project.*
 import kotlinx.android.synthetic.main.item_color.*
 import org.koin.android.ext.android.inject
 
-class CreateProjectActivity : BaseActivity<CreateProjectViewModel>( R.layout.activity_create_project, CreateProjectViewModel::class), PickerColor {
+class CreateProjectActivity : BaseActivity<CreateProjectViewModel>(R.layout.activity_create_project, CreateProjectViewModel::class), PickerColorListener {
 
     var selectedColor: PrimaryColor? = null
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -37,7 +37,7 @@ class CreateProjectActivity : BaseActivity<CreateProjectViewModel>( R.layout.act
 
     private fun createProject() {
         val projectName = et_input_project_title.text.toString()
-        viewModel.createProject(projectName,selectedColor?.id)
+        viewModel.createProject(projectName, selectedColor?.id)
     }
 
     override fun setupViews() {
@@ -55,20 +55,17 @@ class CreateProjectActivity : BaseActivity<CreateProjectViewModel>( R.layout.act
     private fun setupColorPicker() {
         btn_select_color.setOnClickListener {
             val bottomSheetDialogFragment: BottomSheetDialogFragment =
-                    ColorPickerBottomSheetDialogFragment(this)
+                    ColorPickerBottomSheetDialogFragment()
             bottomSheetDialogFragment.isCancelable = true
             bottomSheetDialogFragment.show(
                     supportFragmentManager,
                     bottomSheetDialogFragment.tag)
-            }
         }
+    }
 
     override fun subscribeToLiveData() {
         viewModel.createResult.observe(this, Observer {
-            if (it == true) {
-                showToast("Проект успешно создан")
-                finish()
-            }
+            if (it == true) finish()
         })
     }
 
@@ -80,11 +77,11 @@ class CreateProjectActivity : BaseActivity<CreateProjectViewModel>( R.layout.act
     }
 
     override fun choosedColor(colors: MutableList<PrimaryColor>) {
-        colors.forEach { if (it.isSelected) setupSelectecViews(it) }
+        colors.forEach { if (it.isSelected) setupSelectedViews(it) }
     }
 
-    private fun setupSelectecViews(item: PrimaryColor) {
-        selectedColor = selectedColor
+    private fun setupSelectedViews(item: PrimaryColor) {
+        selectedColor = item
         color_view.visible()
         color_view.background.setColorFilter(Color.parseColor(item.hexCode), PorterDuff.Mode.SRC_ATOP)
         btn_select_color.text = "Change color"

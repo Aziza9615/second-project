@@ -21,7 +21,11 @@ class CreateProjectViewModel(private val repository: ProjectRepositoryImpl) : Ba
         repository.createProject(name, color).observeForever {
                 when (it.status) {
 
-                    ResponseResultStatus.SUCCESS -> createResult.value = it.result != null
+                    ResponseResultStatus.SUCCESS -> {
+                        createResult.value = it.result != null
+                        if (it.result != null) message.value = "Проект успешшно создан"
+                        else message.value = "ошибка при создании проекта"
+                    }
                     ResponseResultStatus.ERROR -> message.value = it.message
                 }
             }

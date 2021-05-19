@@ -6,4 +6,5 @@
     <string name="select_color">Select color</string>
     <string name="notes_2">2 Notes</string>
     <string name="colors">Colors</string>
+    <string name="input_create_note">input_create_note</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.my_second.data.task
+package com.example.my_second.data.note
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,14 +7,14 @@ import com.example.my_second.R
 import com.example.my_second.data.base.BaseAdapter
 import com.example.my_second.data.base.BaseViewHolder
 import com.example.my_second.data.model.Task
-import kotlinx.android.synthetic.main.item_task.view.*
+import kotlinx.android.synthetic.main.item_note.view.*
 
-class TaskAdapter(private var listener: TaskListActivity) : BaseAdapter() {
+class NotesAdapter(private var listener: NotesListActivity) : BaseAdapter() {
 
     private var items = mutableListOf<Task>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        return TasksViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_task, parent, false))
+        return TasksViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_note, parent, false))
     }
 
     override fun getItemCount(): Int {

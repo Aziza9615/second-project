@@ -22,6 +22,7 @@ abstract class BaseActivity<VM : BaseViewModel>(
         viewModel = getViewModel (clazz = clazz)
         setupViews()
         subscribeToLiveData()
+        subscribeToMessages()
     }
 
     private fun subscribeToMessages() {
@@ -33,24 +34,3 @@ abstract class BaseActivity<VM : BaseViewModel>(
     abstract fun setupViews()
     abstract fun subscribeToLiveData()
 }
-
-fun main() {
-    val a = A(B(C()), D())
-}
-
-class A(b: B, d: D) {
-
-}
-
-class B(c: C) {
-
-}
-
-class C {
-
-}
-
-class D {
-
-}
-

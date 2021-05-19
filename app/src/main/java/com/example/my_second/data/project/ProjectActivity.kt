@@ -1,10 +1,6 @@
 package com.example.my_second.data.project
 
-import android.content.Context
-import android.content.Intent
 import android.os.Handler
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -12,16 +8,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.my_second.R
 import com.example.my_second.data.base.BaseActivity
-import com.example.my_second.data.color.ColorPickerBottomSheetDialogFragment
 import com.example.my_second.data.create.CreateProjectActivity
-import com.example.my_second.data.create.CreateProjectViewModel
 import com.example.my_second.data.di.ItemSimpleTouch
-import com.example.my_second.data.local.showToast
-import com.example.my_second.data.task.TaskListActivity
+import com.example.my_second.data.note.NotesListActivity
 import com.example.my_second.data.model.Project
-import kotlinx.android.synthetic.main.activity_create_project.*
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.android.ext.android.inject
+import kotlinx.android.synthetic.main.view_bottom_tab.*
 
 class ProjectActivity : BaseActivity<ProjectViewModel>(R.layout.activity_main, ProjectViewModel::class), ProjectAdapter.ClickListener {
 
@@ -50,7 +42,7 @@ class ProjectActivity : BaseActivity<ProjectViewModel>(R.layout.activity_main, P
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 val item = viewModel.data.value?.get(position)
-//                adapter.deleteItem(position)
+                //adapter.deleteItem(position)
                 viewModel.deleteProject(item?.id)
 
             }
@@ -58,7 +50,7 @@ class ProjectActivity : BaseActivity<ProjectViewModel>(R.layout.activity_main, P
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(recycler_view)
     }
-    
+
     private fun setupSearchView() {
         search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
                 androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -99,6 +91,6 @@ class ProjectActivity : BaseActivity<ProjectViewModel>(R.layout.activity_main, P
     }
 
     override fun onItemClick(item: Project) {
-        TaskListActivity.instance(this, item)
+        NotesListActivity.instance(this, item)
     }
 }

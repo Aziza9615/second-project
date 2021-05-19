@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MySecond">
         <activity android:name=".data.create.CreateProjectActivity"></activity>
-        <activity android:name=".data.task.TaskListActivity" />
+        <activity android:name=".data.note.NotesListActivity" />
         <activity android:name=".data.project.ProjectActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

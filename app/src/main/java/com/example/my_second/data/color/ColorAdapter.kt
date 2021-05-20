@@ -26,12 +26,19 @@ class ColorAdapter(private var listener: ClickListener) : BaseAdapter() {
         return items.count()
     }
 
+    var prevSelected: Int? = null
+
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         val item = items[position]
         val holder = holder as ColorViewHolder
         holder.bind(item)
         holder.itemView.setOnClickListener {
             listener.onItemClick(item,position)
+            items.forEach { it.isSelected = false }
+            items[position]. isSelected = true
+            notifyItemChanged(position)
+            prevSelected?. let { notifyItemChanged(it) }
+            prevSelected = position
         }
     }
 

@@ -2,11 +2,12 @@ package com.example.my_second.data.create
 
 
 import androidx.lifecycle.MutableLiveData
+import com.example.my_second.data.base.BaseEvent
 import com.example.my_second.data.base.BaseViewModel
 import com.example.my_second.data.local.ResponseResultStatus
 import com.example.my_second.data.project.ProjectRepositoryImpl
 
-class CreateProjectViewModel(private val repository: ProjectRepositoryImpl) : BaseViewModel() {
+class CreateProjectViewModel(private val repository: ProjectRepositoryImpl) : BaseViewModel<BaseEvent>() {
     val createResult = MutableLiveData<Boolean>()
 
     fun createProject(name: String, color: Int?) {

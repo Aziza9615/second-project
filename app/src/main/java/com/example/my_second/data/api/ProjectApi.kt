@@ -20,6 +20,16 @@ interface ProjectApi {
             "client_Id: fa2ce0543994447f9c0e610a6d5c90ee",
             "client_secret: 2bc37377890345de84a635916aaffa70"
     )
+
+    @POST("projects/{id}/close")
+    fun changeStateOfProjects(@Path("id") id: Long?): Call<Unit>
+
+    @Headers(
+            "Authorization: Bearer ef2d47cfd8cdf0197fa7e88333a980cfba52256a",
+            "client_Id: fa2ce0543994447f9c0e610a6d5c90ee",
+            "client_secret: 2bc37377890345de84a635916aaffa70"
+    )
+
     @POST("projects")
     fun createProject(@Body data: Project): Call<Project>
 

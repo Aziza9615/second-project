@@ -4,14 +4,13 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View.inflate
 import android.widget.Button
 import android.widget.EditText
-import androidx.core.content.res.ComplexColorCompat.inflate
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my_second.R
 import com.example.my_second.data.base.BaseActivity
+import com.example.my_second.data.base.NoteEvent
 import com.example.my_second.data.model.Project
 import com.example.my_second.data.model.Task
 import kotlinx.android.synthetic.main.activity_main.*
@@ -41,19 +40,18 @@ import kotlinx.android.synthetic.main.view_bottom_tab.*
 
      override fun subscribeToLiveData() {
          subscribeToData()
-         subscribeToCreatingNote()
      }
 
      private fun subscribeToData() {
-         viewModel.data?.observe(this, Observer {
-             adapter.addItems(it)
-         })
-     }
-
-     private fun subscribeToCreatingNote() {
-         viewModel.noteCreating.observe(this, Observer {
-             dialog.dismiss()
-             if (it) viewModel.fetchAllProjectsTasks()
+         viewModel.event.observe(this, Observer {
+             when(it) {
+                 is NoteEvent.NoteFetched -> adapter.addItems(it.array)
+                 is NoteEvent.NoteClosed -> adapter.refreshItems(closedPosition)
+                 is NoteEvent.NoteCreated -> {
+                     dialog.dismiss()
+                     viewModel.fetchAllProjectsTasks()
+                 }
+             }
          })
      }
 
@@ -61,8 +59,10 @@ import kotlinx.android.synthetic.main.view_bottom_tab.*
          TODO("Not yet implemented")
      }
 
-     override fun onCheckedClick(item: Task) {
-         TODO("Not yet implemented")
+     var closedPosition: Int = 0
+     override fun onCheckedClick(item: Task, position: Int) {
+         viewModel.closeNote(item.id)
+         closedPosition = position
      }
 
      override fun onRemoveItem(item: Task, position: Int) {

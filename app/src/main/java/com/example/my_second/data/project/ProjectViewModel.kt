@@ -1,15 +1,20 @@
 package com.example.my_second.data.project
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.example.my_second.data.base.BaseEvent
 import com.example.my_second.data.base.BaseViewModel
+import com.example.my_second.data.base.NoteEvent
+import com.example.my_second.data.base.ProjectEvent
 import com.example.my_second.data.local.ResponseResultStatus
 import com.example.my_second.data.model.Project
-import com.example.my_second.data.project.ProjectRepositoryImpl
 
-class ProjectViewModel(private val repository: ProjectRepositoryImpl) : BaseViewModel() {
-    var project = mutableListOf<Project>()
-    val data = MutableLiveData<MutableList<Project>>()
+
+class ProjectViewModel(private val repository: ProjectRepositoryImpl) : BaseViewModel<BaseEvent>() {
+
+    var project: MutableList<Project>? = mutableListOf()
+
+    init {
+        fetchProjects()
+    }
 
     fun fetchProjects() {
         repository.fetchProjects().observeForever {
@@ -19,7 +24,8 @@ class ProjectViewModel(private val repository: ProjectRepositoryImpl) : BaseView
                     loading.value = false
                 }
                 ResponseResultStatus.SUCCESS -> {
-                    data.value = it.result
+                    project = it.result
+                    event.value = ProjectEvent.ProjectFetched(project)
                     loading.value = false
                 }
                 ResponseResultStatus.LOADING -> loading.value = true
@@ -42,11 +48,7 @@ class ProjectViewModel(private val repository: ProjectRepositoryImpl) : BaseView
             }
         }
     }
-
     private fun handleResult(code: Int?) {
         if (code == 204) message.value = "Проект успешно удален"
     }
 }
-
-     // домашнее задание в 80 уроке , не забудь
-    // 20 50 удаление из постмана проект

@@ -29,7 +29,7 @@ class NotesAdapter(private var listener: NotesListActivity) : BaseAdapter() {
             listener.onItemClick(item)
         }
         holder.itemView.cb_task.setOnClickListener {
-            listener.onCheckedClick(item)
+            listener.onCheckedClick(item, position)
         }
         holder.itemView.setOnLongClickListener {
             listener.onRemoveItem(item, position)
@@ -37,14 +37,19 @@ class NotesAdapter(private var listener: NotesListActivity) : BaseAdapter() {
         }
     }
 
-    fun addItems(data: MutableList<Task>) {
-        items = data
-        notifyDataSetChanged()
+    fun addItems(data: MutableList<Task>?) {
+        data?.let {
+            items = it
+            notifyDataSetChanged()
+        }
     }
 
-    interface ClickListener {
+    fun refreshItems(position: Int) {
+    }
+
+        interface ClickListener {
         fun onItemClick(item: Task)
-        fun onCheckedClick(item: Task)
+        fun onCheckedClick(item: Task, position: Int)
         fun onRemoveItem(item: Task, position: Int)
     }
 }

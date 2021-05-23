@@ -13,11 +13,11 @@ interface ProjectRepository {
     fun fetchProjects(): MutableLiveData<ResponseResult<MutableList<Project>>>
     fun createProject(name: String, color: Int?): MutableLiveData<ResponseResult<Project>>
     fun deleteProject(id: Long?): MutableLiveData<ResponseResult<Int>>
+    fun closeNote(id: Long?): MutableLiveData<ResponseResult<Boolean>>
 }
 
-class ProjectRepositoryImpl(
-        private val api: ProjectApi
-) : ProjectRepository {
+class ProjectRepositoryImpl(private val api: ProjectApi) : ProjectRepository {
+
     override fun fetchProjects(): MutableLiveData<ResponseResult<MutableList<Project>>> {
         val data: MutableLiveData<ResponseResult<MutableList<Project>>>
                 = MutableLiveData(ResponseResult.loading())
@@ -26,11 +26,29 @@ class ProjectRepositoryImpl(
                 data.value = ResponseResult.error(t.message)
             }
             override fun onResponse(call: Call<MutableList<Project>>, response: Response<MutableList<Project>>) {
-                data.value = ResponseResult.success(response.body())
+                data.value = if (response.isSuccessful) ResponseResult.success(response.body())
+                else ResponseResult.error(response.message())
             }
         })
         return data
     }
+
+    override fun closeNote(id: Long?) : MutableLiveData<ResponseResult<Boolean>> {
+        val data = MutableLiveData<ResponseResult<Boolean>>(ResponseResult.loading())
+        api.changeStateOfProjects(id).enqueue(object : Callback<Unit> {
+            override fun onFailure(call: Call<Unit>, t: Throwable) {
+                data.value = ResponseResult.loading(t.message)
+
+            }
+
+            override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+                data.value = if (response.isSuccessful) ResponseResult.success(true)
+                else ResponseResult.error(response.message())
+            }
+        })
+        return data
+    }
+
     override fun deleteProject(id: Long?): MutableLiveData<ResponseResult<Int>> {
         val data: MutableLiveData<ResponseResult<Int>>
                 = MutableLiveData(ResponseResult.loading())
